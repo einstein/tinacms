@@ -1,5 +1,11 @@
 # tinacms
 
+## 0.59.2
+
+### Patch Changes
+
+- 88c209b45: Throw when Tina Cloud responds with non 200 code
+
 ## 0.59.1
 
 ### Patch Changes

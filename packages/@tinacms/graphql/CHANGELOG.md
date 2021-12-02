@@ -1,5 +1,11 @@
 # tina-graphql
 
+## 0.58.0
+
+### Minor Changes
+
+- fa7a0419f: Adds experimental support for a data layer between file-based content and the GraphQL API. This allows documents to be indexed so the CMS can behave more like a traditional CMS, with the ability enforce foreign reference constraints and filtering/pagination capabilities.
+
 ## 0.57.2
 
 ### Patch Changes
