@@ -31,7 +31,12 @@ export type ExternalExample = BaseExample & {
 export type Example = InternalExample | ExternalExample
 
 export const EXAMPLES: Example[] = [
-  { title: 'Basic', value: 'basic', isInternal: true },
+  {
+    title: 'Bare bones starter',
+    value: 'basic',
+    isInternal: false,
+    gitURL: 'https://github.com/tinacms/tina-basic-starter',
+  },
   {
     title: 'Tailwind Starter',
     value: 'tina-cloud-starter',
@@ -43,11 +48,6 @@ export const EXAMPLES: Example[] = [
     value: 'tina-docs-starter',
     isInternal: false,
     gitURL: 'https://github.com/tinacms/tina-docs-starter',
-  },
-  {
-    title: 'Tailwind Site Builder',
-    value: 'tina-tailwind-sidebar-demo',
-    isInternal: true,
   },
 ]
 
