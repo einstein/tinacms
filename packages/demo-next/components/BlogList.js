@@ -16,15 +16,11 @@ limitations under the License.
 
 */
 
-import ReactMarkdown from 'react-markdown'
-
 const BlogList = props => {
   return (
     <div>
       <h3>Hi! My name is {props.data ? props.data.name : 'no name'}</h3>
-      <ReactMarkdown>
-        {props.data ? props.data.body : 'md body goes here'}
-      </ReactMarkdown>
+      <div dangerouslySetInnerHTML={{ __html: props.data?.body }} />
       <style jsx>
         {`
           div {
