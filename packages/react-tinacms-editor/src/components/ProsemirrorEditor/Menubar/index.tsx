@@ -19,7 +19,6 @@ limitations under the License.
 import React from 'react'
 
 import { ProsemirrorMenu as BlockMenu } from '../../../plugins/Block'
-import { ProsemirrorMenu as CodeBlockMenu } from '../../../plugins/CodeBlock'
 import { ProsemirrorMenu as HistoryMenu } from '../../../plugins/History'
 import { ProsemirrorMenu as InlineMenu } from '../../../plugins/Inline'
 import { ProsemirrorMenu as ListMenu } from '../../../plugins/List'
@@ -29,6 +28,7 @@ import { ProsemirrorMenu as TableMenu } from '../../../plugins/Table'
 import { ProsemirrorMenu as ImageMenu } from '../../../plugins/Image'
 import { ProsemirrorMenu as LinkMenu } from '../../../plugins/Link'
 import { ProsemirrorMenu as AnchorMenu } from '../../../plugins/Anchor'
+import { ProsemirrorMenu as HtmlEditor } from '../../../plugins/HtmlEditor'
 import {
   AlignJustify,
   AlignRight,
@@ -70,7 +70,6 @@ export const Menubar = ({ plugins, imageProps, ...rest }: Props) => {
         <ImageMenu key="ImageMenu" imageProps={imageProps} />,
         <TableMenu key="TableMenu" />,
         <QuoteMenu key="QuoteMenu" />,
-        <CodeBlockMenu key="CodeBlockMenu" />,
         <HorizontalRule key="HorizontalRule" />,
         <ListMenu key="ListMenu" />,
         <AlignLeft key="AlignLeft" />,
@@ -78,6 +77,7 @@ export const Menubar = ({ plugins, imageProps, ...rest }: Props) => {
         <AlignRight key="AlignRight" />,
         <AlignJustify key="AlignJustify" />,
         <HistoryMenu key="HistoryMenu" />,
+        <HtmlEditor key="HtmlEditor" />,
       ]}
       popups={[
         <TablePopups key="TablePopups" />,
