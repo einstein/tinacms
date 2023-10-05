@@ -23,6 +23,7 @@ import { GitClient } from '@einsteinindustries/tinacms-git-client'
 import { GlobalStyles as TinaCustomStyles } from '@einsteinindustries/tinacms-styles'
 import { NextGitMediaStore } from '../next-git-media-store'
 import { MarkdownFieldPlugin } from '@einsteinindustries/react-tinacms-editor'
+import { HtmlFieldPlugin } from '@einsteinindustries/react-tinacms-editor'
 //import { CustomPaginatorPlugin } from '../plugins/CustomPaginator'
 
 function Empty() {
@@ -54,6 +55,7 @@ export default class Site extends App {
     this.cms.registerApi('git', client)
     this.cms.media.store = new NextGitMediaStore(client)
     this.cms.plugins.add(MarkdownFieldPlugin)
+    this.cms.plugins.add(HtmlFieldPlugin)
   }
 
   render() {
