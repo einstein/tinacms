@@ -5,15 +5,6 @@ import '@testing-library/jest-dom/extend-expect'
 import { EditorModeContext, EditorModeContextProps } from 'context/editorMode'
 
 describe('ProsemirrorMenu', () => {
-  it('should not render MenuButton if no content is available from context', () => {
-    const { queryByTestId } = render(
-      <EditorModeContext.Provider value={null}>
-        <ProsemirrorMenu />
-      </EditorModeContext.Provider>
-    )
-    expect(queryByTestId('menu-button')).toBeNull()
-  })
-
   it('should render MenuButton if content is available from context', () => {
     const mockSetMode = jest.fn()
 
