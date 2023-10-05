@@ -70,7 +70,7 @@ const formOptions = {
     {
       name: 'body',
       label: 'Home Page Content',
-      component: 'markdown',
+      component: 'html',
     },
   ],
   buttons: {
