@@ -29,6 +29,7 @@ import {
 import { EditorProps, PassedImageProps, ImageProps } from '../../types'
 import { MarkdownEditor } from '../MarkdownEditor'
 import { ProsemirrorEditor } from '../ProsemirrorEditor'
+import { HtmlEditor } from 'components/HtmlEditor'
 
 const modeTogglePlugin = {
   name: 'wysiwygModeToggle',
@@ -58,33 +59,44 @@ export const Wysiwyg = ({
   return (
     <EditorModeProvider>
       <EditorModeConsumer>
-        {({ mode }) => (
-          <BrowserFocusProvider>
-            <Wrapper>
-              {mode === 'markdown' ? (
-                <MarkdownEditor
-                  value={value}
-                  onChange={onChange}
-                  imageProps={imageProps}
-                  plugins={pluginList}
-                  sticky={sticky}
-                />
-              ) : (
-                <ProsemirrorEditor
-                  input={{
-                    value,
-                    onChange: onChange,
-                  }}
-                  plugins={pluginList}
-                  sticky={sticky}
-                  format={format}
-                  imageProps={imageProps}
-                  className={className}
-                />
-              )}
-            </Wrapper>
-          </BrowserFocusProvider>
-        )}
+        {(context) => {
+          if (context === null) return null
+          const { mode } = context
+          return (
+            <BrowserFocusProvider>
+              <Wrapper>
+                {mode === 'markdown' ? (
+                  <MarkdownEditor
+                    value={value}
+                    onChange={onChange}
+                    imageProps={imageProps}
+                    plugins={pluginList}
+                    sticky={sticky}
+                  />
+                ) : mode === 'html' ? (
+                  <HtmlEditor
+                    value={value}
+                    onChange={onChange}
+                    plugins={pluginList}
+                    sticky={sticky}
+                  />
+                ) : (
+                  <ProsemirrorEditor
+                    input={{
+                      value,
+                      onChange: onChange,
+                    }}
+                    plugins={pluginList}
+                    sticky={sticky}
+                    format={format}
+                    imageProps={imageProps}
+                    className={className}
+                  />
+                )}
+              </Wrapper>
+            </BrowserFocusProvider>
+          )
+        }}
       </EditorModeConsumer>
     </EditorModeProvider>
   )

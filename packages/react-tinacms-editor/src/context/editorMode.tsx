@@ -20,28 +20,38 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { createContext, useContext } from 'react'
 
-const EditorModeContext = createContext<{
-  mode: string
-  setMode: (mode: string) => void
-}>({
+type EditorMode = 'markdown' | 'wysiwyg' | 'html'
+
+export interface EditorModeContextProps {
+  mode: EditorMode
+  setMode: React.Dispatch<React.SetStateAction<EditorMode>>
+}
+
+export const EditorModeContext = createContext<EditorModeContextProps | null>({
   mode: 'wysiwyg',
   setMode: () => {},
 })
 
 export const EditorModeProvider = ({ children }: any) => {
-  const [mode, setMode] = useState('wysiwyg')
+  const [mode, setMode] = useState<EditorMode>('wysiwyg')
 
   useEffect(() => {
-    document.addEventListener('keydown', event => {
-      if (
-        event.altKey &&
-        event.shiftKey &&
-        event.metaKey &&
-        event.keyCode === 77
-      )
-        setMode(mode === 'wysiwyg' ? 'markdown' : 'wysiwyg')
-    })
-  })
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.altKey && event.shiftKey) {
+        if (event.keyCode === 77) { // 'M'
+          setMode(prevMode => prevMode === 'markdown' ? 'wysiwyg' : 'markdown')
+        } else if (event.keyCode === 72) { // 'H'
+          setMode(prevMode => prevMode === 'html' ? 'wysiwyg' : 'html')
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeydown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeydown)
+    }
+  }, [])
 
   return (
     <EditorModeContext.Provider value={{ mode, setMode }}>

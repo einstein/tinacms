@@ -20,7 +20,7 @@ import React from 'react'
 import { Wysiwyg } from '../components/Wysiwyg'
 import { wysiwygStyles } from './wysiwygStyles'
 
-const HTMLField = wysiwygStyles(props => {
+const HtmlField = wysiwygStyles(props => {
   return (
     <Wysiwyg
       {...props}
@@ -34,6 +34,6 @@ const HTMLField = wysiwygStyles(props => {
 export const HtmlFieldPlugin = {
   __type: 'field',
   name: 'html',
-  Component: HTMLField,
+  Component: HtmlField,
   parse: (value: string) => value || '',
 }
