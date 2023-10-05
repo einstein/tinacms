@@ -23,9 +23,7 @@ import { MenuButton } from '../MenuHelpers/MenuButton'
 import { useEditorModeContext } from '../../context/editorMode'
 
 export const EditorModeMenu = () => {
-  const context = useEditorModeContext()
-  if (!context) return null
-  const { mode, setMode } = context
+  const { mode, setMode } = useEditorModeContext()
 
   const toggleMode = () => {
     if (mode === 'markdown') setMode('wysiwyg')

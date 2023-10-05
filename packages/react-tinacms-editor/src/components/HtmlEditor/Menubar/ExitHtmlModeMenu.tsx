@@ -3,9 +3,7 @@ import { useEditorModeContext } from "context/editorMode"
 import React from "react"
 
 export const ExitHtmlModeMenu: React.FC = () => {
-  const content = useEditorModeContext()
-  if (!content) return null
-  const { setMode } = content
+  const { setMode } = useEditorModeContext()
 
   const exitHtmlMode = () => {
     setMode('wysiwyg')

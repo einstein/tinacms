@@ -53,9 +53,7 @@ export const BaseMenubar = ({
   const scrollY = useRef<number>(0)
   const scrollAnimationRef = useRef<number>(0)
   const { editorView } = useEditorStateContext()
-  const context = useEditorModeContext()
-  if (!context) return null
-  const { mode } = context
+  const { mode } = useEditorModeContext()
 
   useEffect(() => {
     if (menuRef.current && sticky) {

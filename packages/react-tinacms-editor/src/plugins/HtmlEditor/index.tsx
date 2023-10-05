@@ -22,9 +22,7 @@ import { useEditorModeContext } from 'context/editorMode'
 import { MenuButton } from 'components/MenuHelpers/MenuButton'
 
 export const ProsemirrorMenu: React.FC = () => {
-  const content = useEditorModeContext()
-  if (!content) return null
-  const { setMode } = content
+  const { setMode } = useEditorModeContext()
 
   const enterHtmlMode = () => {
     setMode('html')

@@ -27,7 +27,7 @@ export interface EditorModeContextProps {
   setMode: React.Dispatch<React.SetStateAction<EditorMode>>
 }
 
-export const EditorModeContext = createContext<EditorModeContextProps | null>({
+export const EditorModeContext = createContext<EditorModeContextProps>({
   mode: 'wysiwyg',
   setMode: () => {},
 })
