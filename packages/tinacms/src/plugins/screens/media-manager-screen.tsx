@@ -28,7 +28,7 @@ export function createMediaManagerScreenPlugin(namespace?: string) {
     layout: 'fullscreen',
     props: {
       allowDelete: true,
-      namespace
+      namespace,
     },
   })
 }

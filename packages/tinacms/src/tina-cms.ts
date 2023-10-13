@@ -122,7 +122,9 @@ export class TinaCMS extends CMS {
       }
     })
 
-    const mediaManagerScreenPlugin = createMediaManagerScreenPlugin(this.namespace)
+    const mediaManagerScreenPlugin = createMediaManagerScreenPlugin(
+      this.namespace
+    )
     this.plugins.add(mediaManagerScreenPlugin)
   }
 

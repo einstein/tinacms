@@ -266,7 +266,7 @@ export function MediaPicker({
           currentTab
         )
       } catch {
-        // TODO: Events get dispatched already. Does anything else need to happen?
+        // TODO: Events get dispatched already.  Does anything else need to happen?
       }
       setUploading(false)
     },
