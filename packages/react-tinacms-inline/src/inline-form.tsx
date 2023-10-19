@@ -25,8 +25,10 @@ import { RBIEPlugin } from './rbie/plugins/rbie-plugin'
 import { InlineFieldsRenderer } from './rbie/components/inline-fields-renderer'
 
 export interface InlineFormProps {
+  name: string
   form: Form
   children: React.ReactElement | React.ReactElement[] | InlineFormRenderChild
+  onFocusChange?: (name: string, focussedField: string) => void
 }
 
 export interface InlineFormRenderChild {
@@ -44,8 +46,19 @@ export interface InlineFormState {
   setFocussedField(field: string): void
 }
 
-export function InlineForm({ form, children }: InlineFormProps) {
+export interface ExtendedInlineFormState extends InlineFormState {
+  name: string
+}
+
+export function InlineForm({ form, children, onFocusChange, name }: InlineFormProps) {
   const [focussedField, setFocussedField] = React.useState<string>('')
+
+  const updateAndNotifyFocus = (field: string) => {
+    if (onFocusChange) {
+      onFocusChange(focussedField, field)
+    }
+    setFocussedField(field)
+  }
 
   const cms = useCMS()
   const rbie = React.useMemo(() => {
@@ -56,11 +69,12 @@ export function InlineForm({ form, children }: InlineFormProps) {
 
   const inlineFormState = React.useMemo(() => {
     return {
+      name,
       form,
       focussedField,
-      setFocussedField,
+      setFocussedField: updateAndNotifyFocus
     }
-  }, [form, focussedField, setFocussedField])
+  }, [form, focussedField, updateAndNotifyFocus, name])
 
   return (
     <InlineFormContext.Provider value={inlineFormState}>
