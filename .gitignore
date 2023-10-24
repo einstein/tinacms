@@ -17,3 +17,5 @@ packages/cli/forestry/.env
 **/.cache/
 # **/package-lock.json
 **/yarn.lock
+.next
+.nvmrc

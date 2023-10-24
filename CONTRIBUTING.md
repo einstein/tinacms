@@ -18,15 +18,50 @@ _Recommended: use the [active LTS version of Node.js](https://nodejs.org/en/abou
 To get started:
 
 ```bash
-git clone git@github.com:tinacms/tinacms.git
+git clone git@github.com:einstein/tinacms.git
 cd tinacms
-npm install
+## Easiest way is to use an existing docker image.
+docker run -e 'NODE_OPTIONS=--openssl-legacy-provider' -p 3000:3000 -w /app -v "${PWD}/:/app" -it --rm --name tina-dev node:17 /bin/bash
+npm ci --legacy-peer-deps
 npm run build
 
 # Start Next.js Demo
 cd packages/demo-next
 npm run develop
+
+## When you modify Tina, the demo won't automatically show your updates, you will need to also either build with `npm run build` or execute a watch on the package you are modifying
+## you can do this in a separate terminal tab by logging into a new docker shell. i.e.
+## NOTE: these updates take several seconds, not sure why. Also, when watching all files, it seems to not update at all.
+docker exec -it tina-dev /bin/bash
+npm run watch -- --scope=@einsteinindustries/tinacms
 ```
+
+### To publish package to Einstein's npm
+
+#### Before Publishing
+
+- Ensure you have had your work and branch reviewed and approved
+- Switch to your host computer's terminal or login to GitHub on the container
+- Switch back to your branch and run
+
+```bash
+# this will automatically commit new versioning to your branch
+lerna version --no-private # follow prompts and select appropriate versioning
+```
+
+### Go back to the container's terminal and run
+
+```bash
+# navigate back to tinacms root directory if not already in it
+cd ../../
+npm login # follow prompts and use einstein's NPM credentials. Not the NPM token! You will also need to contact Dennis or Jon and ask for the OTP when prompted. You will need to do this twice
+npm run build
+npm run lerna -- publish from-package --yes
+```
+
+At this point, your branch is ready to be merged to master.
+
+- You may now merge, or ask reviewers to approve again and let them know that the only new changes are related to versioning.
 
 **WARNING: Do not run `npm install` from inside the `packages` directory**
 
