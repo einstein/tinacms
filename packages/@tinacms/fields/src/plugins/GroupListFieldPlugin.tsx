@@ -147,6 +147,17 @@ const Item = ({ tinaForm, field, index, item, label, ...p }: ItemProps) => {
   const removeItem = React.useCallback(() => {
     tinaForm.mutators.remove(field.name, index)
   }, [tinaForm, field, index])
+
+  const duplicateItem = React.useCallback(() => {
+    const deepCopy = JSON.parse(JSON.stringify(item))
+    const newItem = {
+      ...deepCopy,
+      name: item.name ? `${item.name} (copy)` : undefined,
+      isCopy: true,
+    }
+    tinaForm.mutators.insert(field.name, index + 1, newItem)
+  }, [tinaForm, field, index, item])
+
   const title = label || (field.label || field.name) + ' Item'
   return (
     <Draggable
