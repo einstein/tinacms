@@ -118,7 +118,7 @@ export function MediaPicker({
     return 'not-configured'
   })
 
-  const { tabs = [], onItemClick, namespace } = cms.media.store
+  const { tabs = [], onItemClick } = cms.media.store
 
   const [listError, setListError] = useState<MediaListError>(defaultListError)
   const [directory, setDirectory] = useState<string | undefined>(
@@ -139,10 +139,12 @@ export function MediaPicker({
   const [search, setSearch] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const [currentTab, setCurrentTab] = useState(0)
+
   const offset = offsetHistory[offsetHistory.length - 1]
 
-  const localStorageKey = `Media-${currentTab}-${offset ?? '0'}-${namespace ??
-    'global'}-q=${search}`
+  const namespace = tabs[currentTab].cachingNamespace ?? 'global'
+  const localStorageKey = `Media-${currentTab}-${offset ??
+    '0'}-${namespace}-q=${search}`
   const resetOffset = () => setOffsetHistory([])
   const navigateNext = () => {
     if (!list.nextOffset) return
@@ -168,6 +170,16 @@ export function MediaPicker({
   const loadMedia = useCallback(() => {
     if (!cms.media.isConfigured) return
     setListState('loading')
+    console.dir(
+      {
+        offset,
+        limit: cms.media.pageSize,
+        directory,
+        currentList: currentTab,
+        search,
+      },
+      { depth: null }
+    )
     cms.media
       .list({
         offset,

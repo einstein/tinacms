@@ -21,8 +21,12 @@ import MediaPreview from './components/mediaPreview'
 
 export class NextGitMediaStore extends GitMediaStore {
   tabs = [
-    { name: 'Fruits', accept: ['image/*'] },
-    { name: 'Animals', accept: ['image/*'] },
+    { name: 'Fruits', accept: ['image/*'], cachingNamespace: 'some' },
+    {
+      name: 'Animals',
+      accept: ['image/*'],
+      cachingNamespace: Math.random() + '-yo',
+    },
     { name: 'Files', accept: ['.pdf', '.mp4', '.avi', '.docx'] },
   ]
   namespace = 'demo'
