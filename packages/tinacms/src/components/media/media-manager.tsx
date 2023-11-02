@@ -170,16 +170,6 @@ export function MediaPicker({
   const loadMedia = useCallback(() => {
     if (!cms.media.isConfigured) return
     setListState('loading')
-    console.dir(
-      {
-        offset,
-        limit: cms.media.pageSize,
-        directory,
-        currentList: currentTab,
-        search,
-      },
-      { depth: null }
-    )
     cms.media
       .list({
         offset,
