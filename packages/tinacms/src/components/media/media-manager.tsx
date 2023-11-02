@@ -37,6 +37,7 @@ import { Button } from '@einsteinindustries/tinacms-styles'
 import { useDropzone } from 'react-dropzone'
 import { MediaItem, Breadcrumb, CursorPaginator } from './index'
 import { LoadingDots } from '@einsteinindustries/tinacms-form-builder'
+import path from 'path'
 
 const MEDIA_STORAGE_META_KEY = 'media-meta'
 
@@ -143,7 +144,7 @@ export function MediaPicker({
   const offset = offsetHistory[offsetHistory.length - 1]
 
   const namespace = tabs[currentTab].cachingNamespace ?? 'global'
-  const localStorageKey = `Media-${currentTab}-${offset ??
+  const localStorageKey = `Media-${currentTab}-${directory ?? '/'}-${offset ??
     '0'}-${namespace}-q=${search}`
   const resetOffset = () => setOffsetHistory([])
   const navigateNext = () => {
@@ -229,7 +230,11 @@ export function MediaPicker({
   }, [directory, cms.media.isConfigured, localStorageKey])
 
   const onClickMediaItem = (item: Media) => {
-    setItemModal(item)
+    if (item.type === 'dir') {
+      setDirectory(path.join(item.directory, item.filename))
+    } else {
+      setItemModal(item)
+    }
   }
 
   let deleteMediaItem: (item: Media) => void
@@ -245,8 +250,12 @@ export function MediaPicker({
 
   if (onSelect) {
     selectMediaItem = (item: Media) => {
-      onSelect(item)
-      if (close) close()
+      if (item.type === 'dir') {
+        setDirectory(path.join(item.directory, item.filename))
+      } else {
+        onSelect(item)
+        if (close) close()
+      }
     }
   }
   const [uploading, setUploading] = useState(false)
@@ -322,6 +331,7 @@ export function MediaPicker({
   }
   const handleTabChange = (idx: number) => {
     setCurrentTab(idx)
+    setDirectory(props.directory)
     resetOffset()
   }
 

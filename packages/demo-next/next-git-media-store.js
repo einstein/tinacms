@@ -44,11 +44,13 @@ export class NextGitMediaStore extends GitMediaStore {
       '/public/images2/',
       '/public/files/',
     ]
-    const newOptions = {
-      ...options,
-      directory: directories[options.currentList],
+
+    let directory = options.directory
+    if (directory === undefined) {
+      directory = directories[options.currentList]
     }
-    const listItems = await super.list(newOptions)
+
+    const listItems = await super.list({ options, directory })
     return {
       ...listItems,
       items: listItems.items.map(media => ({
