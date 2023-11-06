@@ -103,7 +103,7 @@ const ListItem = styled.li<ListItemProps>`
 
   &:before {
     position: absolute;
-    opacity: 0;
+    opacity: ${p => (p.type === 'dir' ? 0.9 : 0)};
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     content: attr(data-content);

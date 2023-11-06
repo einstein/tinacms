@@ -71,8 +71,14 @@ export interface MediaUploadOptions {
 export interface MediaStore {
   /**
    * Custom tabs for displaying different asset sources, etc.
+   * name: name to display in tab
+   * accept: the type of content type to accept
+   * cachingNamespace: a unique namespace key to avoid collisions in local cache
+   *  this key also allows to be more granular in terms of how different tabs are cached
+   *  for example, it allows one tab to be cached globally, while allow other tabs
+   *  to be cached more granularly under different contexts
    */
-  tabs?: { name: string; accept: string[] }[]
+  tabs?: { name: string; accept: string[]; cachingNamespace: string }[]
 
   /**
    * A component to handle click events when image cannot be inserted into an img placeholder
@@ -84,11 +90,6 @@ export interface MediaStore {
    * Default value is 500ms
    */
   debouncedSearchTime?: number
-
-  /**
-   * Namespace for the Media Store. Useful for isolating caches.
-   */
-  namespace?: string
 
   /**
    * The [input accept string](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept)
