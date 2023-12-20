@@ -16,7 +16,7 @@
 
  */
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { MouseEventHandler, useCallback, useEffect, useState } from 'react'
 import { useDebounce } from 'react-use'
 import styled, { css } from 'styled-components'
 import { useCMS } from '../../react-tinacms'
@@ -140,6 +140,9 @@ export function MediaPicker({
   const [search, setSearch] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const [currentTab, setCurrentTab] = useState(0)
+
+  const [newFolderModalOpen, setNewFolderModalOpen] = useState(false)
+  const [newFolderName, setNewFolderName] = useState('')
 
   const offset = offsetHistory[offsetHistory.length - 1]
 
@@ -335,6 +338,25 @@ export function MediaPicker({
     resetOffset()
   }
 
+  const handleCreateNewFolder = async () => {
+    if (!newFolderName) {
+      alert('Please enter a name for the new folder.')
+      return
+    }
+
+    const targetDirectory = directory ? `${directory}/${newFolderName}` : newFolderName
+
+    try {
+      await cms.media.store.createDirectory(targetDirectory)
+      setNewFolderModalOpen(false)
+      setNewFolderName('')
+      refresh()
+    } catch (error) {
+      console.error('Error creating new folder:', error)
+      alert('Error creating new folder.')
+    }
+  }
+
   return (
     <>
       <MediaPickerWrap>
@@ -364,6 +386,7 @@ export function MediaPicker({
           <div>
             <RefreshButton onClick={refresh} />
             <UploadButton onClick={onClick} uploading={uploading} />
+            <NewFolderButton onClick={() => setNewFolderModalOpen(true)} currentTab={currentTab} />
           </div>
         </Header>
         <List {...rootProps} dragActive={isDragActive}>
@@ -408,6 +431,33 @@ export function MediaPicker({
             ChildComponent={onItemClick}
           />
         )}
+
+        {newFolderModalOpen && (
+          <Modal>
+            <PopupModal>
+              <ModalHeader close={() => setNewFolderModalOpen(false)}>Create New Folder</ModalHeader>
+              <ModalBody style={{ padding: '1rem' }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleCreateNewFolder() }}>
+                  <input
+                    id="new-folder-name"
+                    type="text"
+                    placeholder="Folder Name"
+                    value={newFolderName}
+                    onChange={(e) => setNewFolderName(e.target.value)}
+                    style={{ width: '100%', marginBottom: '1rem', padding: '.5rem' }}
+                  />
+                  <Button
+                    style={{ marginTop: '1rem' }}
+                    primary
+                    onClick={handleCreateNewFolder}
+                  >
+                    Create
+                  </Button>
+                </form>
+              </ModalBody>
+            </PopupModal>
+          </Modal>
+        )}
       </MediaPickerWrap>
     </>
   )
@@ -449,7 +499,7 @@ const ItemModal = ({ close, item, ChildComponent }: ItemModal) => {
   )
 }
 
-const RefreshButton = ({ onClick }: any) => {
+const RefreshButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <Button
       style={{ minWidth: '5.3rem', marginRight: '15px' }}
@@ -461,7 +511,7 @@ const RefreshButton = ({ onClick }: any) => {
   )
 }
 
-const UploadButton = ({ onClick, uploading }: any) => {
+const UploadButton = ({ onClick, uploading }: { onClick: MouseEventHandler<HTMLElement> | undefined, uploading: boolean }) => {
   return (
     <Button
       style={{ minWidth: '5.3rem' }}
@@ -470,6 +520,20 @@ const UploadButton = ({ onClick, uploading }: any) => {
       onClick={onClick}
     >
       {uploading ? <LoadingDots /> : 'Upload'}
+    </Button>
+  )
+}
+
+const NewFolderButton = ({ onClick, currentTab }: { onClick: () => void, currentTab: number }) => {
+  if (currentTab !== 2) return null
+
+  return (
+    <Button
+      style={{ minWidth: '5.3rem', marginLeft: '15px' }}
+      primary
+      onClick={onClick}
+    >
+      New Folder
     </Button>
   )
 }
