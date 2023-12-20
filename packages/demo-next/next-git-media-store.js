@@ -60,4 +60,7 @@ export class NextGitMediaStore extends GitMediaStore {
       })),
     }
   }
+  async createDirectory(directory) {
+    console.log('Creating directory ', directory)
+  }
 }
