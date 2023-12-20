@@ -122,6 +122,11 @@ export interface MediaStore {
    * Lists all media in a specific directory.
    */
   list(options?: MediaListOptions): Promise<MediaList>
+
+  /**
+   * Creates a new directory in the Media Store.
+   */
+  createDirectory(directory: string): Promise<void>
 }
 
 export declare type MediaListOffset = string | number
@@ -272,6 +277,24 @@ export class MediaManager implements MediaStore {
       return media
     } catch (error) {
       this.events.dispatch({ type: 'media:list:failure', ...options, error })
+      throw error
+    }
+  }
+
+  async createDirectory(directory: string): Promise<void> {
+    try {
+      this.events.dispatch({ type: 'media:createDirectory:start', directory })
+      await this.store.createDirectory(directory)
+      this.events.dispatch({
+        type: 'media:createDirectory:success',
+        directory,
+      })
+    } catch (error) {
+      this.events.dispatch({
+        type: 'media:createDirectory:failure',
+        directory,
+        error,
+      })
       throw error
     }
   }
