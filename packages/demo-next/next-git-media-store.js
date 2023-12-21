@@ -37,15 +37,16 @@ export class NextGitMediaStore extends GitMediaStore {
     },
     { name: 'Files', accept: ['.pdf', '.mp4', '.avi', '.docx'], customActions: [
       {
-        name: 'Another Custom Action',
-        onClick: () => {
-          alert(`Custom action for files`)
+        name: 'Current Tab Info',
+        onClick: ({currentTab, currentTabName}) => {
+          alert(`Current tab: ${currentTabName} at index ${currentTab}`)
         },
       },
       {
-        name: 'One more for good measure',
-        onClick: () => {
-          alert(`Another custom action for files`)
+        name: 'Refresh Media After Action',
+        onClick: ({refreshMedia}) => {
+          alert(`Another custom action for files. This one will refresh the media store after it runs.`)
+          refreshMedia()
         }
       }
     ] },

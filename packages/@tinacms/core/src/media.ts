@@ -151,7 +151,7 @@ export interface MediaList {
 }
 
 /**
- * A custom action for a media tab
+ * Custom actions for a media tab
  */
 export interface MediaTabCustomAction {
   name: string

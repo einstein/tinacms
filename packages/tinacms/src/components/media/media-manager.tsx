@@ -237,11 +237,13 @@ export function MediaPicker({
     }
   }
 
+  type CustomAction = {
+    name: string,
+    onClick: (props: any) => void
+  }
+
   const renderCustomActionButtons = (
-    customActions: {
-      name: string,
-      onClick: (tabName: string) => void
-    }[] = [],
+    customActions: CustomAction[] = [],
     additionalProps: any
   ) => {
     return customActions.map((action, index) => (
@@ -352,6 +354,14 @@ export function MediaPicker({
     resetOffset()
   }
 
+  const customActionProps = {
+    cms: cms,
+    currentDirectory: directory,
+    currentTab: currentTab,
+    currentTabName: tabs[currentTab].name,
+    refreshMedia: refresh
+  }
+
   return (
     <>
       <MediaPickerWrap>
@@ -379,7 +389,7 @@ export function MediaPicker({
             />
           </form>
           <div className="button-container">
-            {renderCustomActionButtons(tabs[currentTab].customActions, {})}
+            {renderCustomActionButtons(tabs[currentTab].customActions, customActionProps)}
             <RefreshButton onClick={refresh} />
             <UploadButton onClick={onClick} uploading={uploading} />
           </div>
