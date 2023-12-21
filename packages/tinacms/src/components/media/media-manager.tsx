@@ -361,7 +361,6 @@ export function MediaPicker({
   }
 
   const customActionProps = {
-    cms: cms,
     currentDirectory: directory,
     currentTab: currentTab,
     currentTabName: tabs[currentTab].name,
