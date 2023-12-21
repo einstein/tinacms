@@ -239,12 +239,19 @@ export function MediaPicker({
 
   type CustomAction = {
     name: string,
-    onClick: (props: any) => void
+    onClick: (props: CustomActionProps) => void
+  }
+
+  interface CustomActionProps {
+    currentDirectory: string
+    currentTab: number
+    currentTabName: string
+    refreshMedia: () => void
   }
 
   const renderCustomActionButtons = (
     customActions: CustomAction[] = [],
-    additionalProps: any
+    additionalProps: CustomActionProps
   ) => {
     return customActions.map((action, index) => (
       <CustomActionButton
@@ -501,9 +508,10 @@ const UploadButton = ({ onClick, uploading }: any) => {
   )
 }
 
-const CustomActionButton = ({ name, onClick }: { key: number, name: string, onClick: () => void }) => {
+const CustomActionButton = ({ key, name, onClick }: { key: number, name: string, onClick: () => void }) => {
   return (
     <Button
+      key={key}
       style={{ minWidth: '5.3rem' }}
       primary
       onClick={onClick}
