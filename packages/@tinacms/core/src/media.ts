@@ -153,8 +153,7 @@ export interface MediaList {
 /**
  * Custom action props for a media tab
  */
-interface CustomActionProps {
-  cms: any
+export interface CustomActionProps {
   currentDirectory: string
   currentTab: number
   currentTabName: string
