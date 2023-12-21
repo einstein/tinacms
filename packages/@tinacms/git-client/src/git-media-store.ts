@@ -68,10 +68,7 @@ export class GitMediaStore implements MediaStore {
     }
   }
   async createDirectory(directory: string): Promise<void> {
-    return this.client.writeToDisk({
-      fileRelativePath: directory,
-      content: '',
-    })
+    console.log(`Creating directory: ${directory}`)
   }
   async delete(media: Media): Promise<void> {
     return this.client.deleteFromDisk({
