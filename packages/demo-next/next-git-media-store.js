@@ -24,8 +24,7 @@ export class NextGitMediaStore extends GitMediaStore {
     { name: 'Fruits', accept: ['image/*'], cachingNamespace: 'some', customActions: [
       {
         name: 'A Custom Action',
-        onClick: (tabName) => {
-          console.log(tabName)
+        onClick: () => {
           alert(`Custom action for fruits`)
         }
       }
