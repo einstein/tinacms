@@ -237,6 +237,23 @@ export function MediaPicker({
     }
   }
 
+  const renderCustomActionButtons = (
+    customActions: {
+      name: string,
+      onClick: (tabName: string) => void
+    }[] = [],
+    additionalProps: any
+  ) => {
+    return customActions.map((action, index) => (
+      <CustomActionButton
+        key={index}
+        name={action.name}
+        onClick={() => action.onClick(additionalProps)}
+      />
+    ))
+  }
+  
+
   let deleteMediaItem: (item: Media) => void
   if (allowDelete) {
     deleteMediaItem = (item: Media) => {
@@ -361,9 +378,10 @@ export function MediaPicker({
               onChange={e => setSearchInput(e.target.value)}
             />
           </form>
-          <div>
+          <div className="button-container">
             <RefreshButton onClick={refresh} />
             <UploadButton onClick={onClick} uploading={uploading} />
+            {renderCustomActionButtons(tabs[currentTab].customActions, {})}
           </div>
         </Header>
         <List {...rootProps} dragActive={isDragActive}>
@@ -474,6 +492,20 @@ const UploadButton = ({ onClick, uploading }: any) => {
   )
 }
 
+const CustomActionButton = ({ name, onClick }: { key: number, name: string, onClick: () => void }) => {
+  return (
+    <Button
+      style={{ minWidth: '5.3rem' }}
+      primary
+      onClick={onClick}
+    >
+      {name}
+    </Button>
+  )
+}
+
+
+
 const LoadingMediaList = styled(props => {
   return (
     <div {...props}>
@@ -526,6 +558,14 @@ const Header = styled.div`
 
   @media (min-width: 720px) {
     padding: var(--tina-padding-big) 1rem var(--tina-padding-big) 1.125rem;
+  }
+
+  .button-container {
+    display: flex;
+    align-items: center;
+    > button:not(:last-child) {
+      margin-right: 15px;
+    }
   }
 `
 
