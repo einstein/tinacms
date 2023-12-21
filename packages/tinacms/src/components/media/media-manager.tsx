@@ -379,9 +379,9 @@ export function MediaPicker({
             />
           </form>
           <div className="button-container">
+            {renderCustomActionButtons(tabs[currentTab].customActions, {})}
             <RefreshButton onClick={refresh} />
             <UploadButton onClick={onClick} uploading={uploading} />
-            {renderCustomActionButtons(tabs[currentTab].customActions, {})}
           </div>
         </Header>
         <List {...rootProps} dragActive={isDragActive}>
