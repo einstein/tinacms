@@ -151,13 +151,13 @@ export interface MediaList {
 }
 
 /**
- * Custom actions for a media tab
+ * Custom action props for a media tab
  */
 interface CustomActionProps {
-  cms: any,
-  currentDirectory: string,
-  currentTab: number,
-  currentTabName: string,
+  cms: any
+  currentDirectory: string
+  currentTab: number
+  currentTabName: string
   refreshMedia: () => void
 }
 
