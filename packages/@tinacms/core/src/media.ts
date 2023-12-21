@@ -150,6 +150,9 @@ export interface MediaList {
   nextOffset?: MediaListOffset
 }
 
+/**
+ * Custom actions for a media tab
+ */
 interface CustomActionProps {
   cms: any,
   currentDirectory: string,

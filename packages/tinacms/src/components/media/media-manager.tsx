@@ -255,7 +255,6 @@ export function MediaPicker({
     ))
   }
   
-
   let deleteMediaItem: (item: Media) => void
   if (allowDelete) {
     deleteMediaItem = (item: Media) => {
@@ -513,8 +512,6 @@ const CustomActionButton = ({ name, onClick }: { key: number, name: string, onCl
     </Button>
   )
 }
-
-
 
 const LoadingMediaList = styled(props => {
   return (
