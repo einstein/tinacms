@@ -154,8 +154,8 @@ export interface MediaList {
  * A custom action for a media tab
  */
 export interface MediaTabCustomAction {
-  name: string,
-  onClick: (tabName: string) => void
+  name: string
+  onClick: (...args: any[]) => void
 }
 
 /**
