@@ -150,12 +150,20 @@ export interface MediaList {
   nextOffset?: MediaListOffset
 }
 
+interface CustomActionProps {
+  cms: any,
+  currentDirectory: string,
+  currentTab: number,
+  currentTabName: string,
+  refreshMedia: () => void
+}
+
 /**
  * Custom actions for a media tab
  */
 export interface MediaTabCustomAction {
   name: string
-  onClick: (...args: any[]) => void
+  onClick: (props: CustomActionProps) => void
 }
 
 /**
