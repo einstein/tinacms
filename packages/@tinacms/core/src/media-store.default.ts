@@ -38,6 +38,9 @@ export class DummyMediaStore implements MediaStore {
       nextOffset: 0,
     }
   }
+  async createDirectory(directory: string) {
+    // Unnecessary
+  }
   async delete() {
     // Unnecessary
   }

@@ -67,6 +67,12 @@ export class GitMediaStore implements MediaStore {
       nextOffset: nextOffset(offset, limit, file.content.length),
     }
   }
+  async createDirectory(directory: string): Promise<void> {
+    return this.client.writeToDisk({
+      fileRelativePath: directory,
+      content: '',
+    })
+  }
   async delete(media: Media): Promise<void> {
     return this.client.deleteFromDisk({
       relPath: media.id,
