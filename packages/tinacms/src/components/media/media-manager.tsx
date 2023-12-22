@@ -32,6 +32,7 @@ import {
   Media,
   MediaListOffset,
   MediaListError,
+  MediaTabCustomAction,
 } from '@einsteinindustries/tinacms-core'
 import { Button } from '@einsteinindustries/tinacms-styles'
 import { useDropzone } from 'react-dropzone'
@@ -237,6 +238,29 @@ export function MediaPicker({
     }
   }
 
+  interface CustomActionProps {
+    currentDirectory: string
+    currentTab: number
+    currentTabName: string
+    refreshMedia: () => void
+  }
+
+  const renderCustomActionButtons = (
+    customActions: MediaTabCustomAction[] | undefined = [],
+    additionalProps: CustomActionProps
+  ) => {
+    if (customActions && customActions.length > 0) {
+      return customActions.map((action, index) => (
+        <CustomActionButton
+          key={index}
+          name={action.name}
+          onClick={() => action.onClick(additionalProps)}
+        />
+      ))
+    }
+    return null
+  }
+
   let deleteMediaItem: (item: Media) => void
   if (allowDelete) {
     deleteMediaItem = (item: Media) => {
@@ -335,6 +359,13 @@ export function MediaPicker({
     resetOffset()
   }
 
+  const customActionProps = {
+    currentDirectory: directory ?? '',
+    currentTab: currentTab,
+    currentTabName: tabs[currentTab].name,
+    refreshMedia: refresh,
+  }
+
   return (
     <>
       <MediaPickerWrap>
@@ -361,7 +392,11 @@ export function MediaPicker({
               onChange={e => setSearchInput(e.target.value)}
             />
           </form>
-          <div>
+          <div className="button-container">
+            {renderCustomActionButtons(
+              tabs[currentTab].customActions,
+              customActionProps
+            )}
             <RefreshButton onClick={refresh} />
             <UploadButton onClick={onClick} uploading={uploading} />
           </div>
@@ -474,6 +509,22 @@ const UploadButton = ({ onClick, uploading }: any) => {
   )
 }
 
+const CustomActionButton = ({
+  key,
+  name,
+  onClick,
+}: {
+  key: number
+  name: string
+  onClick: () => void
+}) => {
+  return (
+    <Button key={key} style={{ minWidth: '5.3rem' }} primary onClick={onClick}>
+      {name}
+    </Button>
+  )
+}
+
 const LoadingMediaList = styled(props => {
   return (
     <div {...props}>
@@ -526,6 +577,14 @@ const Header = styled.div`
 
   @media (min-width: 720px) {
     padding: var(--tina-padding-big) 1rem var(--tina-padding-big) 1.125rem;
+  }
+
+  .button-container {
+    display: flex;
+    align-items: center;
+    > button:not(:last-child) {
+      margin-right: 15px;
+    }
   }
 `
 

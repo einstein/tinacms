@@ -77,8 +77,14 @@ export interface MediaStore {
    *  this key also allows to be more granular in terms of how different tabs are cached
    *  for example, it allows one tab to be cached globally, while allow other tabs
    *  to be cached more granularly under different contexts
+   * customActions: custom actions to be displayed in the tab
    */
-  tabs?: { name: string; accept: string[]; cachingNamespace: string }[]
+  tabs?: {
+    name: string
+    accept: string[]
+    cachingNamespace: string
+    customActions?: MediaTabCustomAction[]
+  }[]
 
   /**
    * A component to handle click events when image cannot be inserted into an img placeholder
@@ -142,6 +148,24 @@ export interface MediaListOptions {
 export interface MediaList {
   items: Media[]
   nextOffset?: MediaListOffset
+}
+
+/**
+ * Custom action props for a media tab
+ */
+export interface CustomActionProps {
+  currentDirectory: string
+  currentTab: number
+  currentTabName: string
+  refreshMedia: () => void
+}
+
+/**
+ * Custom actions for a media tab
+ */
+export interface MediaTabCustomAction {
+  name: string
+  onClick: (props: CustomActionProps) => void
 }
 
 /**
