@@ -238,7 +238,7 @@ export function MediaPicker({
   }
 
   type CustomAction = {
-    name: string,
+    name: string
     onClick: (props: CustomActionProps) => void
   }
 
@@ -250,18 +250,21 @@ export function MediaPicker({
   }
 
   const renderCustomActionButtons = (
-    customActions: CustomAction[] = [],
+    customActions: CustomAction[] | undefined = [],
     additionalProps: CustomActionProps
   ) => {
-    return customActions.map((action, index) => (
-      <CustomActionButton
-        key={index}
-        name={action.name}
-        onClick={() => action.onClick(additionalProps)}
-      />
-    ))
+    if (customActions && customActions.length > 0) {
+      return customActions.map((action, index) => (
+        <CustomActionButton
+          key={index}
+          name={action.name}
+          onClick={() => action.onClick(additionalProps)}
+        />
+      ))
+    }
+    return null
   }
-  
+
   let deleteMediaItem: (item: Media) => void
   if (allowDelete) {
     deleteMediaItem = (item: Media) => {
@@ -364,7 +367,7 @@ export function MediaPicker({
     currentDirectory: directory,
     currentTab: currentTab,
     currentTabName: tabs[currentTab].name,
-    refreshMedia: refresh
+    refreshMedia: refresh,
   }
 
   return (
@@ -394,7 +397,10 @@ export function MediaPicker({
             />
           </form>
           <div className="button-container">
-            {renderCustomActionButtons(tabs[currentTab].customActions, customActionProps)}
+            {renderCustomActionButtons(
+              tabs[currentTab].customActions,
+              customActionProps
+            )}
             <RefreshButton onClick={refresh} />
             <UploadButton onClick={onClick} uploading={uploading} />
           </div>
@@ -507,14 +513,17 @@ const UploadButton = ({ onClick, uploading }: any) => {
   )
 }
 
-const CustomActionButton = ({ key, name, onClick }: { key: number, name: string, onClick: () => void }) => {
+const CustomActionButton = ({
+  key,
+  name,
+  onClick,
+}: {
+  key: number
+  name: string
+  onClick: () => void
+}) => {
   return (
-    <Button
-      key={key}
-      style={{ minWidth: '5.3rem' }}
-      primary
-      onClick={onClick}
-    >
+    <Button key={key} style={{ minWidth: '5.3rem' }} primary onClick={onClick}>
       {name}
     </Button>
   )
