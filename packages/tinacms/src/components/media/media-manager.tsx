@@ -243,7 +243,7 @@ export function MediaPicker({
   }
 
   interface CustomActionProps {
-    currentDirectory: string
+    currentDirectory?: string
     currentTab: number
     currentTabName: string
     refreshMedia: () => void
