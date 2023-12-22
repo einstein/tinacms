@@ -1,6 +1,6 @@
 {
   "name": "@einsteinindustries/react-tinacms-editor",
-  "version": "0.45.5",
+  "version": "0.45.6",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "module": "dist/react-tinacms-editor.esm.js",
@@ -17,8 +17,8 @@
     "generate-lock-file": "npm i --package-lock-only --legacy-peer-deps"
   },
   "devDependencies": {
-    "@einsteinindustries/react-tinacms-inline": "^0.45.5",
-    "@einsteinindustries/tinacms": "^0.45.5",
+    "@einsteinindustries/react-tinacms-inline": "^0.45.6",
+    "@einsteinindustries/tinacms": "^0.45.6",
     "@einsteinindustries/tinacms-core": "^0.45.5",
     "@einsteinindustries/tinacms-fields": "^0.45.5",
     "@einsteinindustries/tinacms-form-builder": "^0.45.5",
