@@ -32,6 +32,7 @@ import {
   Media,
   MediaListOffset,
   MediaListError,
+  MediaTabCustomAction,
 } from '@einsteinindustries/tinacms-core'
 import { Button } from '@einsteinindustries/tinacms-styles'
 import { useDropzone } from 'react-dropzone'
@@ -237,20 +238,15 @@ export function MediaPicker({
     }
   }
 
-  type CustomAction = {
-    name: string
-    onClick: (props: CustomActionProps) => void
-  }
-
   interface CustomActionProps {
-    currentDirectory?: string
+    currentDirectory: string
     currentTab: number
     currentTabName: string
     refreshMedia: () => void
   }
 
   const renderCustomActionButtons = (
-    customActions: CustomAction[] | undefined = [],
+    customActions: MediaTabCustomAction[] | undefined = [],
     additionalProps: CustomActionProps
   ) => {
     if (customActions && customActions.length > 0) {
@@ -364,7 +360,7 @@ export function MediaPicker({
   }
 
   const customActionProps = {
-    currentDirectory: directory,
+    currentDirectory: directory ?? '',
     currentTab: currentTab,
     currentTabName: tabs[currentTab].name,
     refreshMedia: refresh,
