@@ -40,11 +40,22 @@ import { ordered_list } from './nodes/list-ordered'
 import { paragraph } from './nodes/paragraph'
 import { text } from './nodes/text'
 import { tables } from './nodes/tables'
+import { span } from './nodes/span'
 
-export const marks = { code, em, link, anchor,strike, strong, subscript, superscript }
+export const marks = {
+  code,
+  em,
+  link,
+  anchor,
+  strike,
+  strong,
+  subscript,
+  superscript,
+}
 
 export const nodes = {
   doc,
+  span,
   paragraph,
   blockquote,
   bullet_list,

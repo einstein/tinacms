@@ -58,25 +58,30 @@ export const ProsemirrorMenu: FunctionComponent = () => {
           <H4 view={view} onClick={toggle} />
           <H5 view={view} onClick={toggle} />
           <H6 view={view} onClick={toggle} />
+          <P view={view} onClick={toggle} />
         </Dismissible>
       </MenuDropdown>
     </>
   )
 }
 
-function makeToggleHeader(level: number) {
-  return function toggleHeader(
+function makeToggleBlock(typeName: string, level?: number) {
+  return function toggleBlock(
     state: EditorState,
     dispatch: typeof EditorView.prototype.dispatch
   ) {
-    const tn = th(
-      state.schema.nodes.heading,
-      { level },
+    const nodeType =
+      typeName === 'paragraph'
+        ? state.schema.nodes.paragraph
+        : state.schema.nodes.heading
+    const attrs = typeName === 'heading' ? { level } : null
+
+    return th(
+      nodeType,
+      attrs,
       state.schema.nodes.paragraph,
       null
-    )
-
-    return tn(state, dispatch)
+    )(state, dispatch)
   }
 }
 
@@ -105,11 +110,14 @@ const HeadingFive = styled.h5`
 const HeadingSix = styled.h6`
   ${BaseHeading}
 `
+const Paragraph = styled.p`
+  ${BaseHeading}
+`
 
 const H1 = blockTool({
   Component: HeadingOne,
   children: 'Heading 1',
-  command: makeToggleHeader(1),
+  command: makeToggleBlock('heading', 1),
   typeName: 'heading',
   attrs: { level: 1 },
   title: formatKeymap('Mod-Alt-1'),
@@ -117,7 +125,7 @@ const H1 = blockTool({
 const H2 = blockTool({
   Component: HeadingTwo,
   children: 'Heading 2',
-  command: makeToggleHeader(2),
+  command: makeToggleBlock('heading', 2),
   typeName: 'heading',
   attrs: { level: 2 },
   title: formatKeymap('Mod-Alt-2'),
@@ -125,7 +133,7 @@ const H2 = blockTool({
 const H3 = blockTool({
   Component: HeadingThree,
   children: 'Heading 3',
-  command: makeToggleHeader(3),
+  command: makeToggleBlock('heading', 3),
   typeName: 'heading',
   attrs: { level: 3 },
   title: formatKeymap('Mod-Alt-3'),
@@ -133,7 +141,7 @@ const H3 = blockTool({
 const H4 = blockTool({
   Component: HeadingFour,
   children: 'Heading 4',
-  command: makeToggleHeader(4),
+  command: makeToggleBlock('heading', 4),
   typeName: 'heading',
   attrs: { level: 4 },
   title: formatKeymap('Mod-Alt-4'),
@@ -141,7 +149,7 @@ const H4 = blockTool({
 const H5 = blockTool({
   Component: HeadingFive,
   children: 'Heading 5',
-  command: makeToggleHeader(5),
+  command: makeToggleBlock('heading', 5),
   typeName: 'heading',
   attrs: { level: 5 },
   title: formatKeymap('Mod-Alt-5'),
@@ -149,8 +157,15 @@ const H5 = blockTool({
 const H6 = blockTool({
   Component: HeadingSix,
   children: 'Heading 6',
-  command: makeToggleHeader(6),
+  command: makeToggleBlock('heading', 6),
   typeName: 'heading',
   attrs: { level: 6 },
   title: formatKeymap('Mod-Alt-6'),
+})
+const P = blockTool({
+  Component: Paragraph,
+  children: 'Paragraph',
+  command: makeToggleBlock('paragraph'),
+  typeName: 'paragraph',
+  title: formatKeymap('Mod-Alt-0'),
 })
