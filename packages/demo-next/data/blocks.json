@@ -11,13 +11,13 @@
       "text": "Spiderman"
     },
     {
+      "_template": "wysiwyg",
+      "content": "<h1>This is a Heading 1</h1><p>This is a paragraph</p>"
+    },
+    {
       "_template": "image",
       "src": "/images/MSC16006197_s.jpg",
       "alt": "image alt text"
-    },
-    {
-      "_template": "wysiwyg",
-      "content": "# Hello World"
     }
   ],
   "hero_image": "/images2/final_animals-homeschooling_credit-alamy.jpg"

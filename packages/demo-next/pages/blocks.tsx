@@ -200,7 +200,7 @@ const wysi_template: BlockTemplate = {
   label: 'Content',
   defaultItem: {
     _template: 'wysiwyg',
-    content: '# Hello World',
+    content: '<p>Hello World</p>',
   },
 }
 
@@ -230,7 +230,7 @@ const PAGE_BUILDER_BLOCKS = {
   },
   wysiwyg: {
     Component: ({ data }) => {
-      return <InlineWysiwyg name="content">{data.content}</InlineWysiwyg>
+      return <InlineWysiwyg name="content" format="html"><div dangerouslySetInnerHTML={{__html: data.content}} /></InlineWysiwyg>
     },
     template: wysi_template,
   },
