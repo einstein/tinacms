@@ -167,5 +167,4 @@ const P = blockTool({
   children: 'Paragraph',
   command: makeToggleBlock('paragraph'),
   typeName: 'paragraph',
-  title: formatKeymap('Mod-Alt-7'),
 })
